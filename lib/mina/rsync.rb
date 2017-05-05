@@ -9,6 +9,7 @@ set :repository, "."
 set :branch, "master"
 set :rsync_options, []
 set :rsync_copy, "rsync --archive --acls --xattrs"
+set :rsync_sub_folder, ""
 
 # Stage is used on your local machine for rsyncing from.
 set :rsync_stage, "tmp/deploy"
@@ -36,6 +37,7 @@ task :rsync => %w[rsync:stage] do
 
   rsync = %w[rsync]
   rsync.concat fetch(:rsync_options)
+  settings.rsync_stage += "/" + settings.rsync_sub_folder if settings.rsync_sub_folder
   rsync << fetch(:rsync_stage) + "/"
 
   user = fetch(:user) + "@" if fetch(:user)

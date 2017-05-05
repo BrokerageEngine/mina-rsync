@@ -37,8 +37,8 @@ task :rsync => %w[rsync:stage] do
 
   rsync = %w[rsync]
   rsync.concat fetch(:rsync_options)
-  settings.rsync_stage += "/" + settings.rsync_sub_folder if settings.rsync_sub_folder
-  rsync << fetch(:rsync_stage) + "/"
+  rsync << fetch(:rsync_stage) + "/" + fetch(:rsync_sub_folder)
+  
 
   user = fetch(:user) + "@" if fetch(:user)
   host = fetch(:domain)

@@ -45,6 +45,7 @@ task :rsync => %w[rsync:stage] do
   rsync << "#{user}#{host}:#{rsync_cache.call}"
 
   print_status "Rsyncing with #{rsync}..."
+  print_status "Rsyncing with options #{fetch(:rsync_options)}..."
   run.call rsync
 end
 

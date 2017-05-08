@@ -44,6 +44,7 @@ task :rsync => %w[rsync:stage] do
   host = fetch(:domain)
   rsync << "#{user}#{host}:#{rsync_cache.call}"
 
+  print "RSYNC: #{rsync}" if fetch(:simulate) || fetch(:verbose)
   run.call rsync
 end
 

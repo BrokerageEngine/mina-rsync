@@ -8,7 +8,7 @@ require File.expand_path("../rsync/version", __FILE__)
 set :repository, "."
 set :branch, "master"
 set :rsync_options, []
-set :rsync_copy, "rsync --archive --acls --xattrs"
+set :rsync_copy, "rsync -azP --archive --acls --xattrs"
 set :rsync_sub_folder, ""
 
 # Stage is used on your local machine for rsyncing from.

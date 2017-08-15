@@ -5,6 +5,8 @@ Mina::Rsync for Mina
 **Deploy with Rsync** to your server from any local (or remote) repository when using [**Mina**](http://nadarei.co/mina).  
 Saves you from having to install Git on your production machine and allows you to customize which files you want to deploy. Also allows you to easily precompile things on your local machine before deploying.
 
+Test edit
+
 ### Tour
 - Suitable for deploying any apps, be it Ruby, Rails, Node.js or others.  
 - Exclude files from being deployed with Rsync's `--exclude` options.

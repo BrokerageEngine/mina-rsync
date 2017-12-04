@@ -72,6 +72,11 @@ namespace :rsync do
     # because then the #print_command called by #run prints its own prefix.
     print "Git checkout: " unless fetch(:simulate) || fetch(:verbose)
     run.call git + %W[reset --hard origin/#{fetch(:branch)}]
+     bc = fetch(:commit_id)
+     if bc && bc != ""
+         print "Using Specific Commit: #{fetch(:commit_id)}"
+         run.call git + %W[reset --hard #{bc}]
+      end
   end
 
   task :build do

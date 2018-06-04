@@ -62,7 +62,7 @@ namespace :rsync do
 
   desc "Stage the repository in a local directory."
   task :stage => %w[create_stage] do
-    print_status "Staging..."
+    print_status "Preparing for rsync..."
 
     stage = fetch(:rsync_stage)
     git = %W[git --git-dir #{stage}/.git --work-tree #{stage}]

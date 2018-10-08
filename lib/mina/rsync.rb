@@ -7,12 +7,12 @@ require File.expand_path("../rsync/version", __FILE__)
 
 set :repository, "."
 set :branch, "master"
-set :rsync_options, []
 if fetch(:ssh_options) && fetch(:ssh_options) !=  ""
-  set :rsync_copy, "rsync -e 'ssh #{ssh_options}' -azP --archive --acls --xattrs"
+  set :rsync_options, ["-e ssh #{fetch(:ssh_options)}"]
 else
-  set :rsync_copy, "rsync -azP --archive --acls --xattrs"
+set :rsync_options, []
 end
+set :rsync_copy, "rsync -azP --archive --acls --xattrs"
 set :rsync_sub_folder, ""
 
 # Stage is used on your local machine for rsyncing from.
@@ -48,8 +48,8 @@ task :rsync => %w[rsync:stage] do
   host = fetch(:domain)
   rsync << "#{user}#{host}:#{rsync_cache.call}"
 
-  print_status "Rsyncing with #{rsync}..."
-  print_status "Rsyncing with options #{fetch(:rsync_options)}..."
+  print_status "Rsyncing with #{rsync.join(" ")}..."
+  print_status "Rsyncing with options #{fetch(:rsync_options).join(" ")}..."
   run.call rsync
 end
 

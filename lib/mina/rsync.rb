@@ -38,7 +38,7 @@ task :rsync => %w[rsync:stage] do
 
   full_options = []
   if fetch(:ssh_options) && fetch(:ssh_options) !=  ""
-    full_options << [fetch(:ssh_options)]
+    full_options <<  ["-e ssh #{fetch(:ssh_options)}"]
   end 
   full_options.concat(fetch(:rsync_options))
   rsync = %w[rsync]

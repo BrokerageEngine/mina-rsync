@@ -38,21 +38,21 @@ task :rsync => %w[rsync:stage] do
 
   full_options = []
   if fetch(:ssh_options) && fetch(:ssh_options) !=  ""
-    full_options <<  ["-e \"ssh #{fetch(:ssh_options)}\""]
+    full_options <<  "-e \"ssh #{fetch(:ssh_options)}\""
   end 
   full_options.concat(fetch(:rsync_options))
-  rsync = %w[rsync]
-  rsync.concat(full_options)
-  rsync << fetch(:rsync_stage) + "/" + fetch(:rsync_sub_folder)
+  rsync_command = %w[rsync]
+  rsync_command.concat(full_options)
+  rsync_command << fetch(:rsync_stage) + "/" + fetch(:rsync_sub_folder)
   
 
   user = fetch(:user) + "@" if fetch(:user)
   host = fetch(:domain)
-  rsync << "#{user}#{host}:#{rsync_cache.call}"
+  rsync_command << "#{user}#{host}:#{rsync_cache.call}"
 
-  print_status "Rsyncing with #{rsync.join(" ")}..."
+  print_status "Rsyncing with #{rsync_command.join(" ")}..."
   print_status "Rsyncing with options #{full_options.join(" ")}..."
-  run.call rsync
+  run.call rsync_command
 end
 
 namespace :rsync do

@@ -40,7 +40,7 @@ task :rsync => %w[rsync:stage] do
   if fetch(:ssh_options) && fetch(:ssh_options) !=  ""
     full_options << [fetch(:ssh_options)]
   end 
-  full_options << fetch(:rsync_options)
+  full_options.concat(fetch(:rsync_options))
   rsync = %w[rsync]
   rsync.concat(full_options)
   rsync << fetch(:rsync_stage) + "/" + fetch(:rsync_sub_folder)

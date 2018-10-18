@@ -8,9 +8,18 @@ require File.expand_path("../rsync/version", __FILE__)
 set :repository, "."
 set :branch, "master"
 if fetch(:ssh_options) && fetch(:ssh_options) !=  ""
-  set :rsync_options, ["-e ssh #{fetch(:ssh_options)}"]
+  if fetch(:rsync_options).nil?
+    set :rsync_options, ["-e ssh #{fetch(:ssh_options)}"]
+  else
+    set :rsync_options, ["-e ssh #{fetch(:ssh_options)}"].concat(fetch(:rsync_options))
+   
+  end 
+ 
 else
-set :rsync_options, []
+  if fetch(:rsync_options).nil?
+   
+    set :rsync_options, []
+  end 
 end
 set :rsync_copy, "rsync -azP --archive --acls --xattrs"
 set :rsync_sub_folder, ""

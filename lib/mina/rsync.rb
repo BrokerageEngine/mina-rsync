@@ -48,8 +48,13 @@ desc "Stage and rsync to the server (or its cache)."
 task :rsync => %w[rsync:stage] do
   print_status "Rsyncing to #{rsync_cache.call}..."
 
+  full_options = []
+  if fetch(:ssh_options) && fetch(:ssh_options) !=  ""
+    full_options << fetch(:ssh_options)
+  end 
+  full_options << fetch(:rsync_options)
   rsync = %w[rsync]
-  rsync.concat fetch(:rsync_options)
+  rsync.concat(full_options)
   rsync << fetch(:rsync_stage) + "/" + fetch(:rsync_sub_folder)
   
 
@@ -58,7 +63,7 @@ task :rsync => %w[rsync:stage] do
   rsync << "#{user}#{host}:#{rsync_cache.call}"
 
   print_status "Rsyncing with #{rsync.join(" ")}..."
-  print_status "Rsyncing with options #{fetch(:rsync_options).join(" ")}..."
+  print_status "Rsyncing with options #{full_options.join(" ")}..."
   run.call rsync
 end
 
